@@ -45,7 +45,7 @@ function animate(){
   c.strokeStyle='blue';
   c.stroke();
   theta += 0.1;
-  if(y==201){
+  if(y==1000){
     break;
   }
   
