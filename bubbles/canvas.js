@@ -1,6 +1,6 @@
 var canvas = document.querySelector('canvas');
-var width = canvas.width = window.innerWidth - 4
-var height = canvas.height = window.innerHeight - 7.2
+var width = canvas.width = window.innerWidth 
+var height = canvas.height = window.innerHeight 
 
 var c = canvas.getContext('2d');
 
@@ -23,8 +23,8 @@ window.addEventListener('mousemove', function(event){
 })
 
 window.addEventListener('resize', function(){
-   width = canvas.width = window.innerWidth - 4;
-   height = canvas.height = window.innerHeight - 7.2;
+   width = canvas.width = window.innerWidth;
+   height = canvas.height = window.innerHeight;
    init();
 })
 
