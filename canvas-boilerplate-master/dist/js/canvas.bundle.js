@@ -106,8 +106,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
-var width = canvas.width = innerWidth;
-var height = canvas.height = innerHeight;
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 var mouse = {
   x: innerWidth / 2,
   y: innerHeight / 2
@@ -122,69 +122,44 @@ addEventListener('resize', function () {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
   init();
-});
-var gravity = 0.5;
-var friction = 0.99; // Objects
+}); // Objects
 
-var Ball = /*#__PURE__*/function () {
-  function Ball(x, y, dx, dy, radius, color) {
-    _classCallCheck(this, Ball);
+var _Object = /*#__PURE__*/function () {
+  function Object(x, y, radius, color) {
+    _classCallCheck(this, Object);
 
     this.x = x;
     this.y = y;
-    this.dx = dx;
-    this.dy = dy;
     this.radius = radius;
-    this.friction = friction;
     this.color = color;
   }
 
-  _createClass(Ball, [{
+  _createClass(Object, [{
     key: "draw",
     value: function draw() {
       c.beginPath();
       c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
       c.fillStyle = this.color;
       c.fill();
-      c.stroke();
       c.closePath();
     }
   }, {
     key: "update",
     value: function update() {
       this.draw();
-      this.x += this.dx;
-      this.y += this.dy;
-
-      if (this.x + this.radius > width || this.x - this.radius < 0) {
-        this.dx = -this.dx;
-      }
-
-      if (this.y + this.radius + this.dy > height) {
-        this.dy = -this.dy * friction;
-      } else {
-        this.dy += gravity;
-      }
     }
   }]);
 
-  return Ball;
+  return Object;
 }(); // Implementation
 
 
-var balls;
-var colorArray = ['#FA7482', '#FF81BC', '#FFF674', '#12D6BE', '#7383C8'];
+var objects;
 
 function init() {
-  balls = [];
+  objects = [];
 
-  for (var i = 0; i < 200; i++) {
-    var x = _utils__WEBPACK_IMPORTED_MODULE_0___default.a.randomIntFromRange(0, width);
-    var y = _utils__WEBPACK_IMPORTED_MODULE_0___default.a.randomIntFromRange(0, height / 2);
-    var dx = _utils__WEBPACK_IMPORTED_MODULE_0___default.a.randomIntFromRange(-5, 5);
-    var radius = _utils__WEBPACK_IMPORTED_MODULE_0___default.a.randomIntFromRange(6, 25);
-    var color = _utils__WEBPACK_IMPORTED_MODULE_0___default.a.randomColor(colorArray);
-    balls.push(new Ball(x, y, dx, 0, radius, color));
+  for (var i = 0; i < 400; i++) {// objects.push()
   }
 } // Animation Loop
 
@@ -192,9 +167,9 @@ function init() {
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
-  balls.forEach(function (ball) {
-    ball.update();
-  });
+  c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y); // objects.forEach(object => {
+  //  object.update()
+  // })
 }
 
 init();
