@@ -3,25 +3,27 @@ import utils from './utils'
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-var width = canvas.width = innerWidth
-var height = canvas.height = innerHeight
+canvas.width = innerWidth
+canvas.height = innerHeight
 
-const mouse = {
-  x: innerWidth / 2,
-  y: innerHeight / 2
+var mouse = {
+  x: 100,
+  y: 100
 }
+
 
 const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
 
 // Event Listeners
 addEventListener('mousemove', (event) => {
-  mouse.x = event.clientX
-  mouse.y = event.clientY
+  mouse.x = event.x
+  mouse.y = event.y
+  
 })
 
 addEventListener('resize', () => {
-  width = innerWidth
-  height = innerHeight
+  canvas.width = innerWidth
+  canvas.height = innerHeight
 
   init()
 })
@@ -45,25 +47,44 @@ class Object {
 
   update() {
     this.draw()
+    
   }
 }
 
 // Implementation
-let objects
+// let objects
+let c1;
+let c2;
 function init() {
-  objects = []
 
-  for (let i = 0; i < 400; i++) {
-    // objects.push()
-  }
+   c1 = new Object(canvas.width/2, canvas.height/2, 70, 'black')
+   c2 = new Object(undefined, undefined,30, 'red')
+  // objects = []
+
+  // for (let i = 0; i < 400; i++) {
+  //   // objects.push()
+  // }
+  
 }
 
 // Animation Loop
+
 function animate() {
   requestAnimationFrame(animate)
   c.clearRect(0, 0, canvas.width, canvas.height)
-
-  c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
+  
+  c1.update();
+  c2.x = mouse.x
+  c2.y = mouse.y
+  c2.update();
+  
+  var distanceBTW = utils.distance(c1.x, c1.y, c2.x, c2.y)
+  if(distanceBTW < c1.radius + c2.radius){
+    c1.color = 'red'
+  }
+  else{
+    c1.color = 'black'
+  }
   // objects.forEach(object => {
   //  object.update()
   // })
