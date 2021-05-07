@@ -1,5 +1,5 @@
 var canvas = document.querySelector('canvas');
-const width = canvas.width = window.innerWidth -4
+const width = canvas.width = window.innerWidth - 4
 const height = canvas.height = window.innerHeight - 7.2
 
 var c = canvas.getContext('2d');
@@ -31,20 +31,37 @@ var c = canvas.getContext('2d');
 //    c.fill()
 // }
 
-var x=200;
+
+var x = 200;
 var y;
- var theta = 0
-function animate(){
+var theta = 0
+var radius = 50
+var rand = Math.random() * 10
+
+function animate() {
+  
  
-  requestAnimationFrame(animate);
-  y = 200 + Math.pow(2500 - Math.pow(x-200,2) , 0.5) 
-  x = 200 + 100 * Math.cos(theta);
-  y = 200 + 100 * Math.sin(theta);
-  c.beginPath();
-  c.arc(x,y,30,0,Math.PI*2,false);
-  c.strokeStyle='blue';
+   requestAnimationFrame(animate);
+
+  // for revolute the circle---------------->
+
+  c.beginPath()
+  y = 200 + Math.pow(10000 - Math.pow(x - 200, 2), 0.5)
+  x = width/2 + 100 * Math.cos(theta);
+  y = height/2 + 100 * Math.sin(theta);
+  theta += rand;
+  c.arc(x, y, radius, 0, Math.PI * 2, false);
+  c.strokeStyle = 'blue';
   c.stroke();
-  theta += 0.1;
+ 
   
 }
-animate();
+
+
+const click1 = () => {
+  animate();
+}
+const click2 = () => {
+  location.reload();
+}
+

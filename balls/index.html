@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Balls</title>
+  <style>
+   *{
+      margin: 0%;
+      padding: 0%;
+      box-sizing: border-box;
+    }
+    canvas{
+      border: 2px solid red;
+    }
+    div{
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      width: 50%;
+      position: absolute;
+      bottom: 0%;
+      left: 25%;
+      z-index: 10;
+    }
+    button{
+      padding: 10px;
+      margin: 0px 10px;
+      color: white;
+      border-radius: 20px;
+    }
+   
+  </style>
+</head>
+<body>
+  
+  <canvas></canvas>
+  <div>
+    <button style="background-color: green;" onclick={click1()}>Start Animation</button>
+    <button style="background-color: red;" onclick={click2()}>Stop Animation</button>
+  </div>
+  
+  <script src="canvas.js"></script>
+</body>
+</html>
