@@ -1,4 +1,5 @@
 import * as dat from 'dat.gui'
+import utils from './utils'
 
 // const gui = new dat.GUI;
 const gui = new dat.GUI()
@@ -31,15 +32,25 @@ addEventListener('click', (e) => {
   
 })
 
-// Objects
+// properties
+
 const controls ={
   particlesCount: 300,
   speedRange: 12,
   gravity: 0.1,
   friction: -0.005,
-  angle: 2
+  angle: 2,
+  timer: 2
 }
-   
+
+  setInterval(() => {
+  mouse.x = utils.randomIntFromRange(0,width)
+  mouse.y = utils.randomIntFromRange(0,0.75*height/2)
+  init();
+}, controls.timer*1000);
+
+
+// Objects
 
 class Object {
   constructor(x, y, radius, color, velocity) {
@@ -86,9 +97,9 @@ class Object {
 let objects = []
 
 function init() {
-
+  
   for (let i = 0; i < controls.particlesCount; i++) {
-
+    
     const speedFactor = Math.random()*controls.speedRange
 
     const color = `hsl(${i*360/controls.particlesCount}, 100%, 80%)`
@@ -107,29 +118,30 @@ function init() {
     objects.push(new Object(mouse.x,mouse.y,radius,color, velocity,))
 
   }
- 
 }
+
 
 // Animation Loop
 function animate() {
-
+  
   requestAnimationFrame(animate)
-
+  
   c.fillStyle = 'rgba(0,0,0,0.4)'
   c.fillRect(0, 0, canvas.width, canvas.height)
-
+  
   objects.forEach(object => {
-   object.update()
-   
+    object.update()
+    
   })
-
+  
 }
+
+
 gui.add(controls, 'particlesCount', 0, 5000)
 gui.add(controls, 'speedRange', 0, 100)
 gui.add(controls, 'gravity', -3, 3)
 gui.add(controls, 'angle', -2, 2)
 
-
-
 init()
 animate()
+

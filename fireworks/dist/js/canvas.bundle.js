@@ -2638,11 +2638,14 @@ var index = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var dat_gui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dat.gui */ "./node_modules/dat.gui/build/dat.gui.module.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./src/js/utils.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
  // const gui = new dat.GUI;
 
@@ -2665,15 +2668,21 @@ addEventListener('click', function (e) {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
   init();
-}); // Objects
+}); // properties
 
 var controls = {
   particlesCount: 300,
   speedRange: 12,
   gravity: 0.1,
   friction: -0.005,
-  angle: 2
+  angle: 2,
+  timer: 1.5
 };
+setInterval(function () {
+  mouse.x = _utils__WEBPACK_IMPORTED_MODULE_1___default.a.randomIntFromRange(0, width);
+  mouse.y = _utils__WEBPACK_IMPORTED_MODULE_1___default.a.randomIntFromRange(0, 0.75 * height / 2);
+  init();
+}, controls.timer * 1000); // Objects
 
 var _Object = /*#__PURE__*/function () {
   function Object(x, y, radius, color, velocity) {
@@ -2760,6 +2769,73 @@ gui.add(controls, 'gravity', -3, 3);
 gui.add(controls, 'angle', -2, 2);
 init();
 animate();
+
+/***/ }),
+
+/***/ "./src/js/utils.js":
+/*!*************************!*\
+  !*** ./src/js/utils.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function randomIntFromRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function randomColor(colors) {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function distance(x1, y1, x2, y2) {
+  var xDist = x2 - x1;
+  var yDist = y2 - y1;
+  return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2));
+}
+
+function rotateAxis(velocity, angle) {
+  var rotatedVelocities = {
+    x: velocity.x * Math.cos(angle) - velocity.y * Math.sin(angle),
+    y: velocity.x * Math.sin(angle) + velocity.y * Math.cos(angle)
+  };
+  return rotatedVelocities;
+}
+
+function resolveCollision(particle, otherParticle) {
+  var xVelocityDiff = otherParticle.velocity.x - particle.velocity.x;
+  var yVelocityDiff = otherParticle.velocity.y - particle.velocity.y;
+  var xDist = otherParticle.x - particle.x;
+  var yDist = otherParticle.y - particle.y;
+
+  if (xVelocityDiff * xDist + yVelocityDiff * yDist <= 0) {
+    var angle = -Math.atan2(yDist, xDist);
+    var m1 = particle.mass;
+    var m2 = otherParticle.mass;
+    var u1 = rotateAxis(particle.velocity, angle);
+    var u2 = rotateAxis(otherParticle.velocity, angle);
+    var v1 = {
+      x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2),
+      y: u1.y
+    };
+    var v2 = {
+      x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2),
+      y: u2.y
+    };
+    var vFinal1 = rotateAxis(v1, -angle);
+    var vFinal2 = rotateAxis(v2, -angle);
+    particle.velocity.x = vFinal1.x;
+    particle.velocity.y = vFinal1.y;
+    otherParticle.velocity.x = vFinal2.x;
+    otherParticle.velocity.y = vFinal2.y;
+  }
+}
+
+module.exports = {
+  randomIntFromRange: randomIntFromRange,
+  randomColor: randomColor,
+  distance: distance,
+  resolveCollision: resolveCollision
+};
 
 /***/ })
 
