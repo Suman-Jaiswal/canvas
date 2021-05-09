@@ -2669,7 +2669,7 @@ addEventListener('click', function (e) {
 
 var controls = {
   particlesCount: 300,
-  speedRange: 7,
+  speedRange: 12,
   gravity: 0.1,
   friction: -0.005,
   angle: 2
