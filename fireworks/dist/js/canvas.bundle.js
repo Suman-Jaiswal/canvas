@@ -2676,7 +2676,7 @@ var controls = {
   gravity: 0.1,
   friction: -0.005,
   angle: 2,
-  timer: 1.5
+  timer: 2
 };
 setInterval(function () {
   mouse.x = _utils__WEBPACK_IMPORTED_MODULE_1___default.a.randomIntFromRange(0, width);
