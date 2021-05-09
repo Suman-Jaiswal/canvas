@@ -2670,7 +2670,7 @@ addEventListener('resize', function () {
 }); //GUI objects
 
 var wave = {
-  Y: width / 2,
+  Y: height / 2,
   Wavelength: 100,
   Amplitude: 100,
   Frequency: 0.01,
