@@ -79,6 +79,7 @@ class Object {
       alert('Game Over!');
       this.y = -250
       score = 0
+      levelval =1
       objects = [];
        current.innerHTML = "Score: " + score;
     }
