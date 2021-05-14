@@ -18,7 +18,7 @@ function distance(x1, y1, x2, y2) {
    mouse.x = Math.random() * width
    mouse.y = Math.random() * height
    init()
-}, 50)
+}, 100)
 addEventListener('mousemove', (e) => {
   mouse.x = e.x
   mouse.y = e.y
